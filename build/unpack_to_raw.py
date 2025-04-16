@@ -2,6 +2,12 @@ import os
 import pandas as pd
 import boto3
 
+# Define LocalStack endpoint and credentials
+LOCALSTACK_ENDPOINT_URL = "http://localhost:4566"
+AWS_ACCESS_KEY_ID = "root"  # Dummy credentials for LocalStack
+AWS_SECRET_ACCESS_KEY = "root" # Dummy credentials for LocalStack
+AWS_REGION = "us-east-1" # Default region
+
 
 def unpack_data(input_dir, bucket_name, output_file_name):
     """
@@ -13,7 +19,13 @@ def unpack_data(input_dir, bucket_name, output_file_name):
     bucket_name (str): Name of the S3 bucket to upload the combined file to.
     output_file_name (str): Name of the combined CSV file to be uploaded to S3.
     """
-    s3 = boto3.client('s3', endpoint_url='http://localhost:4566')
+    s3 = boto3.client(
+        's3',
+        endpoint_url=LOCALSTACK_ENDPOINT_URL,
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION
+    )
     data_frames = []
 
     # Iterate through train, test, and dev subfolders

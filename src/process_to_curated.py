@@ -1,7 +1,14 @@
 import io
 import pandas as pd
 import boto3
+import os # Added os import if needed elsewhere, or remove if not used
 from transformers import AutoTokenizer
+
+# Define LocalStack endpoint and credentials
+LOCALSTACK_ENDPOINT_URL = "http://localhost:4566"
+AWS_ACCESS_KEY_ID = "root"  # Dummy credentials for LocalStack
+AWS_SECRET_ACCESS_KEY = "root" # Dummy credentials for LocalStack
+AWS_REGION = "us-east-1" # Default region
 
 
 def tokenize_sequences(bucket_staging, bucket_curated, input_file, output_file, model_name="facebook/esm2_t6_8M_UR50D"):
@@ -22,7 +29,13 @@ def tokenize_sequences(bucket_staging, bucket_curated, input_file, output_file, 
     model_name (str): Name of the Hugging Face model to use for tokenization.
     """
     # Initialize S3 client
-    s3 = boto3.client('s3', endpoint_url='http://localhost:4566')
+    s3 = boto3.client(
+        's3',
+        endpoint_url=LOCALSTACK_ENDPOINT_URL,
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION
+    )
 
     # Step 1: Download staging data
     print(f"Downloading {input_file} from staging bucket...")

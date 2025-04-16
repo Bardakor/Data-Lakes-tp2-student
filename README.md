@@ -47,10 +47,11 @@ Enter the following values:
 * Default region name: us-east-1
 * Default output format: json
 
+**Note:** This configuration is primarily used by the AWS CLI itself (e.g., for creating buckets) and by DVC to interact with the LocalStack remote. The Python scripts in this project are configured to connect to LocalStack directly using the endpoint URL and dummy credentials defined within the code.
+
 6. Create LocalStack S3 buckets:
 
 ```bash
-Copier le code
 aws --endpoint-url=http://localhost:4566 s3 mb s3://raw
 aws --endpoint-url=http://localhost:4566 s3 mb s3://staging
 aws --endpoint-url=http://localhost:4566 s3 mb s3://curated
@@ -121,3 +122,14 @@ dvc repro
 Ensure LocalStack is running before executing any pipeline stage.
 This pipeline illustrates a basic ETL flow for a data lake, preparing data from raw to curated for AI model training.
 If you encounter any issues, ensure Docker, AWS CLI, and DVC are correctly configured.
+
+
+python build/unpack_to_raw.py --input_dir ./data/raw --bucket_name raw --output_file_name combined_raw.csv   
+
+```bash
+python build/unpack_to_raw.py --input_dir ./data/raw --bucket_name raw --output_file_name combined_raw.csv   
+```
+
+```bash
+python src/preprocess_to_staging.py --bucket_raw raw --bucket_staging staging --input_file combined_raw.csv --output_prefix preprocessed 
+```
