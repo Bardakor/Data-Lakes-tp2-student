@@ -1,0 +1,46 @@
+# Data directories
+**/data/
+**/data/**
+**/dataset/
+**/datasets/
+**/raw_data/
+**/processed_data/
+
+# Common data file extensions
+*.csv
+*.tsv
+*.json
+*.parquet
+*.avro
+*.orc
+*.jsonl
+*.xlsx
+*.xls
+*.db
+*.sqlite
+*.sqlite3
+*.h5
+*.hdf5
+*.pickle
+*.pkl
+*.joblib
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
